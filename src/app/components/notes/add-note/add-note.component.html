@@ -1,0 +1,96 @@
+<div class="container my-5">
+  <h3 class="mb-3">
+    <form [formGroup]="addNoteForm" class="mx-auto col-md-10">
+      <!-- DESCRIPTION -->
+      <div class="form-group mb-3">
+        <div class="input-field">
+          <label class="input-group-text" for="description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="description"
+            placeholder="Enter Description for Your Note"
+          />
+        </div>
+        <small
+          *ngIf="
+            addNoteForm.controls['description'].dirty &&
+            addNoteForm.hasError('required', 'description')
+          "
+          class="text-danger"
+          >*Description is required</small
+        >
+      </div>
+
+      <!-- FILE SELECT -->
+      <div class="form-group mb-3">
+        <div class="input-field">
+          <input
+            type="file"
+            id="file"
+            (change)="ChangeFile($event)"
+            class="form-control"
+            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+          />
+
+          <button type="submit" class="input-group-text">Upload</button>
+        </div>
+      </div>
+
+      <!-- NoteLevel SELECT -->
+      <div class="form-group mb-3">
+        <div class="input-field">
+          <label class="input-group-text">Note Level</label>
+          <select
+            formControlName="noteLevel"
+            class="form-select"
+            matNativeControl
+          >
+            <option *ngFor="let level of levels" [value]="level.value">
+              {{ level.viewValue }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <small
+        *ngIf="
+          addNoteForm.controls['noteLevel'].dirty &&
+          addNoteForm.hasError('required', 'noteLevel')
+        "
+        class="text-danger"
+        >*Note Level is required</small
+      >
+
+      <!-- CATEGORY SELECT -->
+      <div class="form-group mb-3">
+        <div class="input-field">
+          <label class="input-group-text">Category</label>
+          <select
+            formControlName="category"
+            class="form-select"
+            matNativeControl
+          >
+            <option
+              *ngFor="let category of categories"
+              [value]="category.categoryId"
+            >
+              {{ category.categoryName }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <small
+        *ngIf="
+          addNoteForm.controls['category'].dirty &&
+          addNoteForm.hasError('required', 'category')
+        "
+        class="text-danger"
+        >*Category is required</small
+      >
+
+      <button type="submit" class="btn btn-primary" (click)="addNote()">
+        Submit
+      </button>
+    </form>
+  </h3>
+</div>

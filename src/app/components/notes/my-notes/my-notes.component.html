@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="container flex">
+    <h1>My Notes</h1>
+    <div class="column">
+      <button class="btn btn-warning text-white" routerLink="/note/add">
+        Add New Note
+      </button>
+    </div>
+  </div>
+
+  <table
+    class="table table-light text-black table-hover mt-3"
+    *ngIf="notes && notes.length > 0"
+  >
+    <thead>
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Rating Score</th>
+        <th scope="col">Note Level</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let note of notes">
+        <td>{{ note.description }}</td>
+        <td>
+          <ngb-rating [(rate)]="note.ratingScore"></ngb-rating>
+          <pre><b>{{note.ratingScore}}</b></pre>
+        </td>
+        <td>{{ levels[note.noteLevel].viewValue }}</td>
+        <td class="column">
+          <button class="btn btn-danger" (click)="downloadNote(note.noteId)">
+            Download
+          </button>
+          <button class="btn btn-danger" (click)="deleteNote(note.noteId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mx-auto col-md-4 text-warning" *ngIf="!notes || notes.length <= 0">
+    <p>Sorry We Can NOT Reach to Your Notes For Now</p>
+  </div>
+</div>
